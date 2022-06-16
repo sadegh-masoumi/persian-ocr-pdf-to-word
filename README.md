@@ -25,8 +25,17 @@ sudo apt install tesseract-ocr -y
 # for windows
 
 ```
+Download poppler
+https://poppler.freedesktop.org/
 
+Download tesseract
+https://tesseract-ocr.github.io/tessdoc/Downloads.html
 
+after install add this path to environ variables
+
+or use this code in main.py
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+convert_from_path(pdf_path, poppler_path=r'C:\Users\ad\Downloads\Compressed\poppler-{version}\bin')
 ```
 
 pdf2image and Popper
