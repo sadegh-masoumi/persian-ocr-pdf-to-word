@@ -52,4 +52,10 @@ pip install -r requirements.txt
 # usage 
 ```
 python main.py [pdf_path] [output_dir]
+
+or
+
+python main.py
+PDF path for convertion: [pdf_path]
+Output directory: [output_dir]
 ```
