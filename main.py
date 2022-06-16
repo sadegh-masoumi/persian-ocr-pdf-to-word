@@ -6,16 +6,16 @@ from PIL import Image
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
-
-import os
+from pathlib import Path
 import tempfile
+import sys
 
 
 def pdf_to_word(pdf_path, output_dir, lang='fas', **kwargs):
     """ 
     """
-
-    pdf_name = pdf_path.split('/')[-1].split('.')[0]
+    pdf_path = Path(pdf_path)
+    pdf_name = pdf_path.stem
     pages = convert_from_path(pdf_path, **kwargs)
     texts = []
 
@@ -24,7 +24,7 @@ def pdf_to_word(pdf_path, output_dir, lang='fas', **kwargs):
 
         with tempfile.TemporaryDirectory() as img_dir:
             img_name = f'{pdf_name}-{i+1}.jpg'
-            img_path = os.path.join(img_dir, img_name)
+            img_path = Path(img_dir) / img_name
 
             page.save(img_path, 'JPEG')
             text = pytesseract.image_to_string(Image.open(img_path), lang=lang)
@@ -50,9 +50,16 @@ def pdf_to_word(pdf_path, output_dir, lang='fas', **kwargs):
         paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
         paragraph.style = document.styles['Normal']
 
-    output_path = os.path.join(output_dir, f'{pdf_name}.docx')
+    output_path = Path(output_dir) / f'{pdf_name}.docx'
     document.save(output_path)
     print(f'Done! Your document can be find here "{output_path}"')
 
 
-pdf_to_word('./test.pdf', './result/')
+if __name__ == '__main__':
+    args = sys.argv[1:]
+    if len(args) >= 1:
+        pdf_to_word(args[0], args[1])
+    else:
+        pdf_path = input('PDF path for convertion: ')
+        output_dir = input('Output directory: ')
+        pdf_to_word(pdf_path, output_dir)

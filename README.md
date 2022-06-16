@@ -47,3 +47,9 @@ tesseract is model for convert image to text
 ```
 pip install -r requirements.txt
 ```
+
+
+# usage 
+```
+python main.py [pdf_path] [output_dir]
+```
