@@ -11,8 +11,9 @@ import tempfile
 import sys
 
 
-def pdf_to_word(pdf_path, output_dir, lang='fas', **kwargs):
+def pdf_to_word(pdf_path:str, output_dir:str, lang='fas', **kwargs):
     """ 
+    convert pdf to word
     """
     pdf_path = Path(pdf_path)
     pdf_name = pdf_path.stem
